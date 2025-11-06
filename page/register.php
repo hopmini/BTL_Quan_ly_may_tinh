@@ -66,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     if ($stmt->execute()) {
                         $success = "Đăng ký thành công! Đang chuyển đến trang đăng nhập...";
                         // Chuyển hướng sau 2 giây
-                        header('refresh:2;url=' . BASE_URL . 'page/login.php');
+                        header('refresh:1;url=' . BASE_URL . 'page/login.php');
                     } else {
                         $error = "Lỗi khi thêm dữ liệu: " . $stmt->error;
                         $debug_info = "Execute Error: " . $stmt->error . " | Errno: " . $stmt->errno;
@@ -625,4 +625,4 @@ document.getElementById('registerForm').addEventListener('submit', function(e) {
 document.getElementById('name').focus();
 </script>
 
-<?php include 'templates/footer.php'; ?>
+<?php include '../templates/footer.php'; ?>

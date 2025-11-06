@@ -11,4 +11,4 @@ include '../templates/header.php';
 <p>Role: <?php echo $_SESSION['role']; ?></p>
 <a href="logout.php">Đăng xuất</a>
 
-<?php include 'templates/footer.php'; ?>
+<?php include '../templates/footer.php'; ?>

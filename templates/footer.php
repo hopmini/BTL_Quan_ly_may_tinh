@@ -181,9 +181,9 @@
             <h4>Links Nhanh</h4>
             <ul class="footer-links">
                 <li><a href="<?php echo BASE_URL; ?>index.php">Trang chủ</a></li>
-                <li><a href="<?php echo BASE_URL; ?>page/about.php">Về chúng tôi</a></li>
-                <li><a href="<?php echo BASE_URL; ?>page/blog.php">Blog/Tin tức</a></li>
-                <li><a href="<?php echo BASE_URL; ?>page/contact.php">Liên hệ</a></li>
+                <li><a href="<?php echo BASE_URL; ?>">Về chúng tôi</a></li>
+                <li><a href="<?php echo BASE_URL; ?>">Blog/Tin tức</a></li>
+                <li><a href="<?php echo BASE_URL; ?>">Liên hệ</a></li>
             </ul>
         </div>
 

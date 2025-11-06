@@ -1,11 +1,13 @@
 <?php
 session_start();
-require '../config/db.php';
-include '../templates/header.php';
+require '../config/db.php'; // 1. GỌI CONFIG
+include '../templates/header.php'; // 2. GỌI HEADER
 
+// 3. NÂNG CẤP: Lấy thêm cột 'image_url'
+$services = $conn->query("SELECT id, name, description, image_url, price FROM services ORDER BY id DESC");
 
-// Lấy danh sách dịch vụ
-$services = $conn->query("SELECT * FROM services ORDER BY id DESC");
+// 4. SỬA LỖI: Khởi tạo $i cho animation
+$i = 0; 
 ?>
 
 <style>
@@ -18,86 +20,71 @@ $services = $conn->query("SELECT * FROM services ORDER BY id DESC");
     --bg-light: #F9FAFB;
 }
 
-/* Container chính cho trang */
+/* Container chính */
 .page-container {
     max-width: 1400px;
-    margin: 40px auto 60px; /* Thêm khoảng cách trên dưới */
+    margin: 40px auto 60px;
     padding: 0 20px;
 }
 
-/* Header của Section */
-.section-header {
-    margin-bottom: 40px;
-}
-.section-label {
-    color: var(--primary);
-    font-weight: 600;
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 12px;
-}
-.section-title {
-    font-size: 36px;
-    font-weight: 800;
-    color: var(--text-dark);
-    margin-bottom: 12px;
-}
-.section-description {
-    color: var(--text-light);
-    font-size: 18px;
-    max-width: 600px;
-}
+/* Header Section (Giữ nguyên) */
+.section-header { margin-bottom: 40px; }
+.section-label { color: var(--primary); font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+.section-title { font-size: 36px; font-weight: 800; color: var(--text-dark); margin-bottom: 12px; }
+.section-description { color: var(--text-light); font-size: 18px; max-width: 600px; }
 
 /* Lưới dịch vụ */
 .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 24px;
+    gap: 30px; /* Tăng khoảng cách */
 }
 
+/* * THẺ DỊCH VỤ (CARD) - NÂNG CẤP CHUYÊN NGHIỆP 
+ */
 .service-card {
     background: white;
-    border-radius: 20px;
-    padding: 32px;
+    border-radius: 16px; /* Bo tròn mềm hơn */
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid transparent;
+    border: 1px solid #f0f0f0; /* Thêm viền mờ */
     position: relative;
-    overflow: hidden;
+    overflow: hidden; /* Quan trọng để bo góc ảnh */
+    
+    /* NÂNG CẤP: Dùng Flex để đẩy giá/nút xuống dưới */
+    display: flex;
+    flex-direction: column;
 }
-.service-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--primary), var(--secondary));
-    transform: scaleX(0);
-    transition: transform 0.4s ease;
-}
-.service-card:hover::before { transform: scaleX(1); }
 .service-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 12px 40px rgba(79, 70, 229, 0.15);
-    border-color: var(--primary);
 }
-.service-icon {
-    width: 56px;
-    height: 56px;
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    border-radius: 16px;
+
+/* 1. PHẦN HÌNH ẢNH (Mới) */
+.service-card-image {
+    height: 220px;
+    overflow: hidden;
+}
+.service-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Đảm bảo ảnh lấp đầy khung */
+    transition: transform 0.4s ease;
+}
+.service-card:hover .service-card-image img {
+    transform: scale(1.05); /* Hiệu ứng Zoom khi hover */
+}
+
+/* 2. PHẦN NỘI DUNG (Mới) */
+.service-card-content {
+    padding: 25px 30px 30px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
-    margin-bottom: 20px;
-    transition: all 0.3s ease;
+    flex-direction: column;
+    flex-grow: 1; /* Giúp đẩy footer xuống */
 }
-.service-card:hover .service-icon {
-    transform: scale(1.1) rotate(5deg);
-}
+
+/* (Xóa bỏ .service-icon) */
+
 .service-title {
     font-size: 20px;
     font-weight: 700;
@@ -109,6 +96,13 @@ $services = $conn->query("SELECT * FROM services ORDER BY id DESC");
     font-size: 15px;
     line-height: 1.6;
     margin-bottom: 20px;
+}
+
+/* 3. PHẦN CHÂN CARD (Giá + Nút) (Mới) */
+.service-card-footer {
+    margin-top: auto; /* Đây là trick để đẩy xuống dưới cùng */
+    border-top: 1px solid #f0f0f0;
+    padding-top: 20px;
 }
 .service-price {
     display: flex;
@@ -144,30 +138,14 @@ $services = $conn->query("SELECT * FROM services ORDER BY id DESC");
     transform: scale(1.02);
     box-shadow: 0 8px 24px rgba(79, 70, 229, 0.4);
 }
-.empty-state {
-    grid-column: 1/-1;
-    text-align: center;
-    padding: 80px 20px;
-}
+
+/* (Giữ nguyên .empty-state, keyframes, responsive) */
+.empty-state { grid-column: 1/-1; text-align: center; padding: 80px 20px; }
 .empty-icon { font-size: 64px; color: #E5E7EB; margin-bottom: 20px; }
 .empty-text { color: var(--text-light); font-size: 18px; }
-
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Keyframes cho popup */
-@keyframes slideDown {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .services-grid { grid-template-columns: 1fr; }
-    .section-title { font-size: 28px; }
-}
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 768px) { .services-grid { grid-template-columns: 1fr; } .section-title { font-size: 28px; } }
 </style>
 <main class="page-container">
 
@@ -183,17 +161,40 @@ $services = $conn->query("SELECT * FROM services ORDER BY id DESC");
         <div class="services-grid">
             <?php if ($services->num_rows > 0): ?>
                 <?php while ($service = $services->fetch_assoc()): ?>
+                
                     <div class="service-card" style="animation: fadeInUp 0.5s ease backwards; animation-delay: <?php echo $i * 0.1; ?>s;">
-                        <div class="service-icon">⚙️</div> <h3 class="service-title"><?php echo htmlspecialchars($service['name']); ?></h3>
-                        <p class="service-description"><?php echo htmlspecialchars($service['description']); ?></p>
-                        <div class="service-price">
-                            <span class="price-amount"><?php echo number_format($service['price'], 0, ",", "."); ?></span>
-                            <span class="price-currency">VNĐ</span>
+                        
+                        <div class="service-card-image">
+                            <?php 
+                                // Đặt ảnh fallback (dự phòng)
+                                $image = !empty($service['image_url']) 
+                                         ? htmlspecialchars($service['image_url']) 
+                                         : 'https://via.placeholder.com/400x220/667eea/ffffff?text=ComputerCare';
+                            ?>
+                            <img src="<?php echo $image; ?>" alt="<?php echo htmlspecialchars($service['name']); ?>">
                         </div>
-                        <button class="btn-order" onclick="orderService(<?php echo $service['id']; ?>)">
-                            <i class="fas fa-shopping-cart"></i> Đặt dịch vụ ngay
-                        </button>
+                        
+                        <div class="service-card-content">
+                            
+                            <h3 class="service-title"><?php echo htmlspecialchars($service['name']); ?></h3>
+                            
+                            <p class="service-description"><?php echo htmlspecialchars($service['description']); ?></p>
+                            
+                            <div class="service-card-footer">
+                                <div class="service-price">
+                                    <span class="price-amount"><?php echo number_format($service['price'], 0, ",", "."); ?></span>
+                                    <span class="price-currency">VNĐ</span>
+                                </div>
+                                <button class="btn-order" onclick="orderService(<?php echo $service['id']; ?>)">
+                                    <i class="fas fa-shopping-cart"></i> Đặt dịch vụ ngay
+                                </button>
+                            </div>
+                        </div>
+
                     </div>
+                    <?php 
+                    $i++; // 5. SỬA LỖI: Thêm $i++ cho animation
+                ?>
                 <?php endwhile; ?>
             <?php else: ?>
                 <div class="empty-state">
@@ -212,7 +213,7 @@ function orderService(serviceId) {
         // 1. Đã đăng nhập -> Chuyển đến trang booking
         window.location.href = '<?php echo BASE_URL; ?>page/booking.php?service_id=' + serviceId;
     <?php else: ?>
-        // 2. Chưa đăng nhập -> Hiển thị popup yêu cầu đăng nhập
+        // 2. Chưa đăng nhập -> Hiển thị popup
         const overlay = document.createElement('div');
         overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center';
         overlay.innerHTML = `
@@ -220,16 +221,15 @@ function orderService(serviceId) {
                 <div style="font-size:48px;margin-bottom:20px">🔐</div>
                 <h3 style="font-size:24px;margin-bottom:12px;color:#1F2937">Vui lòng đăng nhập</h3>
                 <p style="color:#6B7280;margin-bottom:24px">Bạn cần đăng nhập để sử dụng dịch vụ này</p>
-                <button onclick="window.location.href='login.php'" style="background:linear-gradient(135deg, #4F46E5, #4338CA);color:white;border:none;padding:12px 32px;border-radius:12px;font-weight:600;cursor:pointer;width:100%">
+                <button onclick="window.location.href='<?php echo BASE_URL; ?>page/login.php'" style="background:linear-gradient(135deg, #4F46E5, #4338CA);color:white;border:none;padding:12px 32px;border-radius:12px;font-weight:600;cursor:pointer;width:100%">
                     Đăng nhập ngay
                 </button>
             </div>
         `;
         document.body.appendChild(overlay);
-        // Cho phép bấm ra ngoài để đóng popup
         overlay.onclick = (e) => e.target === overlay && overlay.remove();
     <?php endif; ?>
 }
 </script>
 
-<?php include 'templates/footer.php'; ?>
+<?php include '../templates/footer.php'; ?>

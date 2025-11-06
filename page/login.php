@@ -53,7 +53,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $success = 'Đăng nhập thành công! Đang chuyển hướng...';
                     
                     // Chuyển hướng sau 1.5 giây
-                    header('refresh:1.5;url=' . BASE_URL . 'index.php');
+                    header('refresh:0.5;url=' . BASE_URL . 'index.php');
                 
                 } else {
                     $error = 'Mật khẩu không chính xác!';
@@ -492,4 +492,4 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
 document.getElementById('username').focus();
 </script>
 
-<?php include 'templates/footer.php'; ?>
+<?php include '../templates/footer.php'; ?>

@@ -413,9 +413,8 @@ include '../templates/header.php'; // GỌI HEADER
 </div>
 
 <script>
-// Định nghĩa phí tại nhà (bạn có thể đổi số này)
-const ON_SITE_FEE = 50000; 
-// Lấy giá gốc của dịch vụ từ PHP
+
+const ON_SITE_FEE = 36000;        
 const BASE_PRICE = <?php echo $service['price']; ?>;
 
 // Lấy các element trong bảng tóm tắt
