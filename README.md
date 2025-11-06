@@ -47,7 +47,14 @@ Hệ thống **Quản lý Dịch vụ Chăm sóc Máy tính (Computer Care)** đ
 </div>
 
 ## 🚀 3. Hình ảnh các chức năng
-
+### Trang đăng nhập
+<img width="1902" height="931" alt="image" src=images/trang_dang_nhap.png />
+### Trang đăng ký
+<img width="1902" height="931" alt="image" src=images/trang_dang_ky.png />
+### Trang chủ
+<img width="1902" height="931" alt="image" src=images/trang_chu.png />
+### Trang profile
+<img width="1902" height="931" alt="image" src=images/trang_profile.png />
 ## ⚙️ 4. Cài đặt
 
 ### 4.1. Cài đặt công cụ, môi trường và các thư viện cần thiết
@@ -99,5 +106,6 @@ Truy cập hệ thống:
 
 ### 4.6. Đăng nhập lần đầu
     
+
 
 
