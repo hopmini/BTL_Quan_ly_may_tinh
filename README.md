@@ -86,13 +86,13 @@ Mở XAMPP Control Panel, Start Apache và MySQL
 Truy cập MySQL WorkBench
 Tạo database:
 ```bash
-CREATE DATABASE IF NOT EXISTS quan_ly_doan_vien
+CREATE DATABASE IF NOT EXISTS computer_service_db
    CHARACTER SET utf8mb4
    COLLATE utf8mb4_unicode_ci;
 ```
 
 ### 4.4. Setup tham số kết nối
-Mở file config.php (hoặc .env) trong project, chỉnh thông tin DB:
+Mở file db.php trong project, chỉnh thông tin DB:
 ```bash
 
 <?php
@@ -118,6 +118,7 @@ Truy cập hệ thống:
 
 ### 4.6. Đăng nhập lần đầu
     
+
 
 
 
