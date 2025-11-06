@@ -54,7 +54,19 @@ Hệ thống **Quản lý Dịch vụ Chăm sóc Máy tính (Computer Care)** đ
 ### Trang chủ
 <img width="1902" height="931" alt="image" src=images/trang_chu.png />
 ### Trang profile
-<img width="1902" height="931" alt="image" src=images/trang_profile.png />
+<img width="1902" height="931" alt="image" src=images/profile.png />
+### Trang giao diện Admin
+<img width="1902" height="931" alt="image" src=images/dashboard.png />
+### Trang các dịch vụ
+<img width="1902" height="931" alt="image" src=images/dich_vu.png />
+### Trang lịch sử đặt hàng
+<img width="1902" height="931" alt="image" src=images/lich_su_dat_hang.png />
+### Trang liên hệ
+<img width="1902" height="931" alt="image" src=images/contact.png />
+### Đổi mật khẩu
+<img width="1902" height="931" alt="image" src=images/change_password.png />
+### Footer của trang
+<img width="1902" height="931" alt="image" src=images/footer.png />
 ## ⚙️ 4. Cài đặt
 
 ### 4.1. Cài đặt công cụ, môi trường và các thư viện cần thiết
@@ -106,6 +118,7 @@ Truy cập hệ thống:
 
 ### 4.6. Đăng nhập lần đầu
     
+
 
 
 
