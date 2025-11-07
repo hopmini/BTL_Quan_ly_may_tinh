@@ -63,94 +63,6 @@ Hệ thống được phân chia làm 2 vai trò chính với các chức năng 
 ## 📁 4. Cấu trúc Thư mục
 
 Dự án được tổ chức theo cấu trúc gọn gàng, tách biệt logic và giao diện:
-Chào bạn. Đây là một ý tưởng rất hay. File README.md cũ của bạn (mà tôi đã giúp bạn tạo) đang dùng chung mẫu của một đề tài khác.
-
-Dưới đây là một file README.md hoàn toàn mới, được thiết kế lại 100% để tập trung vào đúng đề tài "Quản lý Dịch vụ Chăm sóc Máy tính" của bạn.
-
-Nó bao gồm các phần chuyên nghiệp như:
-
-Banner & Badges (Huy hiệu): Một ảnh bìa đẹp và các huy hiệu công nghệ.
-
-Mục lục (Table of Contents): Giúp người đọc dễ dàng điều hướng.
-
-Tính năng Nổi bật: Liệt kê rõ ràng các chức năng của Admin và User (phần này rất quan trọng).
-
-Cấu trúc Thư mục: Giải thích cách bạn tổ chức code (chúng ta vừa làm).
-
-Hướng dẫn Cài đặt (Cập nhật): Hướng dẫn đầy đủ, bao gồm cả bước import CSDL và tài khoản admin.
-
-Code README.md (Thiết kế mới)
-Hãy xóa toàn bộ nội dung file README.md cũ của bạn và dán code mới dưới đây vào.
-
-(Lưu ý: Tôi giả định bạn đã đổi tên các ảnh chụp màn hình và đặt chúng trong thư mục images/ như trong file bạn gửi lên.)
-
-Markdown
-
-<h1 align="center">
-  🖥️ Hệ thống Quản lý Dịch vụ Chăm sóc Máy tính (Computer Care) 🖥️
-</h1>
-
-<p align="center">
-  Một ứng dụng web PHP/MySQL (sử dụng XAMPP) được xây dựng để tin học hóa quy trình đặt lịch và quản lý dịch vụ sửa chữa, bảo trì máy tính.
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/PHP-8.0%2B-777BB4?style=for-the-badge&logo=php" alt="PHP 8.0+">
-  <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL">
-  <img src="https://img.shields.io/badge/Frontend-HTML%2CSS%2CJS-E34F26?style=for-the-badge&logo=html5" alt="Frontend">
-  <img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" alt="License: MIT">
-</p>
-
-<p align="center">
-  <img alt="Project Banner" src="images/dashboard.png">
-</p>
-
----
-
-## 📋 Mục lục
-
-1.  [Giới thiệu](#-1-giới-thiệu)
-2.  [Tính năng Nổi bật](#-2-tính-năng-nổi-bật)
-3.  [Công nghệ sử dụng](#-3-công-nghệ-sử-dụng)
-4.  [Cấu trúc Thư mục](#-4-cấu-trúc-thư-mục)
-5.  [Hướng dẫn Cài đặt](#-5-hướng-dẫn-cài-đặt)
-6.  [Hình ảnh Chức năng](#-6-hình-ảnh-chức-năng)
-7.  [Tác giả](#-7-tác-giả)
-
----
-
-## 📖 1. Giới thiệu
-
-Hệ thống **Quản lý Dịch vụ Chăm sóc Máy tính (Computer Care)** được xây dựng nhằm mục đích tin học hóa quy trình đặt lịch và quản lý dịch vụ sửa chữa, bảo trì máy tính chuyên nghiệp. Thay vì quản lý thủ công qua điện thoại hoặc tin nhắn rời rạc, hệ thống mang đến một giải pháp tập trung, nơi khách hàng có thể dễ dàng xem dịch vụ, đặt lịch hẹn, và theo dõi trạng thái đơn hàng của mình. Đồng thời, hệ thống cung cấp cho quản trị viên (Admin) một bảng điều khiển mạnh mẽ để quản lý dịch vụ, xử lý đơn đặt lịch và xem thống kê kinh doanh.
-
-## ✨ 2. Tính năng Nổi bật
-
-Hệ thống được phân chia làm 2 vai trò chính với các chức năng rõ rệt:
-
-| 👨‍💻 Chức năng Khách hàng (User) | ⚙️ Chức năng Quản trị (Admin) |
-| :--- | :--- |
-| ✅ Đăng ký / Đăng nhập (Băm mật khẩu) | ✅ **Dashboard Tổng quan** (KPIs, Doanh thu, Đơn mới) |
-| ✅ Trang chủ (Giới thiệu, Quy trình) | ✅ **Quản lý Đơn hàng** (Giao diện Tab: Mới, Đang xử lý...) |
-| ✅ Xem chi tiết tất cả Dịch vụ (có hình ảnh) | ✅ **Cập nhật Trạng thái** đơn hàng (Pending -> Completed...) |
-| ✅ Đặt lịch hẹn (Form chuyên nghiệp) | ✅ Thống kê Dịch vụ "Hot", Khách hàng "VIP" |
-| ✅ Chọn Loại thiết bị (PC/Laptop) | ✅ **Quản lý Dịch vụ (CRUD)**: Thêm / Sửa / Xóa Dịch vụ |
-| ✅ Chọn Hình thức (Tại nhà / Mang đến) | ✅ Thao tác nhanh (Sửa/Xóa Dịch vụ) ngay trên Dashboard |
-| ✅ **Lịch sử Đặt lịch** (Theo dõi trạng thái) | ✅ **Quản lý Tài khoản (CRUD)**: Xem / Xóa / Phân quyền |
-| ✅ Hủy đơn hàng (nếu đang chờ xử lý) | ✅ Bảo vệ trang Admin (Chỉ `role` admin được vào) |
-| ✅ Cập nhật thông tin cá nhân (Profile) | ✅ Bảo mật chống SQL Injection (Prepared Statements) |
-| ✅ Thay đổi mật khẩu (Xác thực mật khẩu cũ) | ✅ Giao diện Admin Menu (Dính, dễ điều hướng) |
-
-## 🚀 3. Công nghệ sử dụng
-
-* **Backend:** **PHP 8.0** (Xử lý logic, quản lý phiên).
-* **Database:** **MySQL** (Lưu trữ dữ liệu người dùng, dịch vụ, đơn hàng).
-* **Frontend:** **HTML5**, **CSS3** (Flexbox/Grid, Animations), **JavaScript (ES6)** (Tương tác form, tính tổng tiền động).
-* **Web Server:** **XAMPP** (Sử dụng Apache & MySQL).
-* **Tools:** Visual Studio Code, Git & GitHub.
-
-## 📁 4. Cấu trúc Thư mục
-
-Dự án được tổ chức theo cấu trúc gọn gàng, tách biệt logic và giao diện:
 
 /computer_service/ ├── admin/ (Trang Quản trị) │ ├── index.php (Dashboard, QL Đơn hàng) │ ├── services.php (QL Dịch vụ) │ ├── users.php (QL User) │ └── admin_check.php (File bảo vệ) │ ├── config/ │ └── db.php (Kết nối CSDL & BASE_URL) │ ├── page/ (Các trang chức năng của User) │ ├── login.php │ ├── register.php │ ├── profile.php │ ├── booking.php │ ├── my_bookings.php │ ├── services.php │ └── ... │ ├── templates/ (Header & Footer chung) │ ├── header.php │ └── footer.php │ ├── images/ (Ảnh chụp màn hình cho README) │ ├── dashboard.png │ └── ... │ ├── index.php (Trang chủ công khai) └── README.md
 ## ⚙️ 5. Hướng dẫn Cài đặt
@@ -163,20 +75,20 @@ Dự án được tổ chức theo cấu trúc gọn gàng, tách biệt logic v
 ### 5.2. Các bước Cài đặt
 
 **1. Tải Project:**
-* Clone dự án này về máy: `git clone [URL_CUA_BAN]`
+* Clone dự án này về máy: git clone (https://github.com/hopmini/BTL_Quan_ly_may_tinh)
 * Hoặc tải file ZIP và giải nén.
 
 **2. Di chuyển Project:**
 * Copy thư mục `computer_service` vào `C:\xampp\htdocs\`.
 
 **3. Khởi động Server:**
-* Mở **XAMPP Control Panel** và **Start** 2 module: **Apache** và **MySQL**.
+* Mở **XAMPP Control Panel** và **Start** 2 module: **Apache**.
 
 **4. Cài đặt Database:**
 * Mở trình duyệt, truy cập `http://localhost/phpmyadmin/`.
 * Tạo một database mới với tên: **`computer_service_db`** (Chọn Collation là `utf8mb4_unicode_ci`).
 * Chọn database vừa tạo, mở tab **"SQL"**.
-* Copy và chạy toàn bộ code SQL (mà tôi đã cung cấp) để tạo các bảng: `users`, `services`, `bookings`, `contacts`, `posts`.
+* Copy và chạy toàn bộ code SQL để tạo các bảng: `users`, `services`, `bookings`, `contacts`, `posts`.
 * *Lưu ý: Chạy cả code `INSERT` mẫu để có dữ liệu.*
 
 **5. Cấu hình Kết nối (`config/db.php`):**
@@ -185,7 +97,7 @@ Dự án được tổ chức theo cấu trúc gọn gàng, tách biệt logic v
     define('BASE_URL', 'http://localhost/computer_service/');
     $host = "localhost";
     $user = "root"; 
-    $password = "Hop13102005@"; // <- Mật khẩu MySQL của bạn
+    $password = "Hop13102005@";
     $dbname = "computer_service_db";
     ```
 
@@ -200,9 +112,6 @@ Dự án được tổ chức theo cấu trúc gọn gàng, tách biệt logic v
 ---
 
 ## 📸 6. Hình ảnh Chức năng
-
-*(Tôi giữ lại các đường dẫn `images/...` như trong file bạn gửi)*
-
 ### Trang đăng nhập
 <img alt="Trang đăng nhập" src="images/trang_dang_nhap.png" />
 
@@ -239,3 +148,4 @@ Dự án được tổ chức theo cấu trúc gọn gàng, tách biệt logic v
 * **MSSV:** 1771020309 - 1771020592
 * **Lớp:** CNTT 17-09
 * **Giảng viên hướng dẫn:** Ths. Lê Tuấn Anh
+
