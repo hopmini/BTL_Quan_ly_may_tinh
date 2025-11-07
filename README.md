@@ -1,125 +1,241 @@
-<h2 align="center">
-    <a href="https://dainam.edu.vn/vi/khoa-cong-nghe-thong-tin">
-    🎓 Faculty of Information Technology (DaiNam University)
-    </a>
-</h2>
-<h2 align="center">
-    Youth Union Member Management
-</h2>
-<div align="center">
-    <p align="center">
-        <img src="docs/logo/aiotlab_logo.png" alt="AIoTLab Logo" width="170"/>
-        <img src="docs/logo/fitdnu_logo.png" alt="AIoTLab Logo" width="180"/>
-        <img src="docs/logo/dnu_logo.png" alt="DaiNam University Logo" width="200"/>
-    </p>
+<h1 align="center">
+  🖥️ Hệ thống Quản lý Dịch vụ Chăm sóc Máy tính (Computer Care) 🖥️
+</h1>
 
-[![AIoTLab](https://img.shields.io/badge/AIoTLab-green?style=for-the-badge)](https://www.facebook.com/DNUAIoTLab)
-[![Faculty of Information Technology](https://img.shields.io/badge/Faculty%20of%20Information%20Technology-blue?style=for-the-badge)](https://dainam.edu.vn/vi/khoa-cong-nghe-thong-tin)
-[![DaiNam University](https://img.shields.io/badge/DaiNam%20University-orange?style=for-the-badge)](https://dainam.edu.vn)
+<p align="center">
+  Một ứng dụng web PHP/MySQL (sử dụng XAMPP) được xây dựng để tin học hóa quy trình đặt lịch và quản lý dịch vụ sửa chữa, bảo trì máy tính.
+</p>
 
-</div>
- 
+<p align="center">
+  <img src="https://img.shields.io/badge/PHP-8.0%2B-777BB4?style=for-the-badge&logo=php" alt="PHP 8.0+">
+  <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL">
+  <img src="https://img.shields.io/badge/Frontend-HTML%2CSS%2CJS-E34F26?style=for-the-badge&logo=html5" alt="Frontend">
+  <img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" alt="License: MIT">
+</p>
+
+<p align="center">
+  <img alt="Project Banner" src="images/dashboard.png">
+</p>
+
+---
+
+## 📋 Mục lục
+
+1.  [Giới thiệu](#-1-giới-thiệu)
+2.  [Tính năng Nổi bật](#-2-tính-năng-nổi-bật)
+3.  [Công nghệ sử dụng](#-3-công-nghệ-sử-dụng)
+4.  [Cấu trúc Thư mục](#-4-cấu-trúc-thư-mục)
+5.  [Hướng dẫn Cài đặt](#-5-hướng-dẫn-cài-đặt)
+6.  [Hình ảnh Chức năng](#-6-hình-ảnh-chức-năng)
+7.  [Tác giả](#-7-tác-giả)
+
+---
+
 ## 📖 1. Giới thiệu
+
 Hệ thống **Quản lý Dịch vụ Chăm sóc Máy tính (Computer Care)** được xây dựng nhằm mục đích tin học hóa quy trình đặt lịch và quản lý dịch vụ sửa chữa, bảo trì máy tính chuyên nghiệp. Thay vì quản lý thủ công qua điện thoại hoặc tin nhắn rời rạc, hệ thống mang đến một giải pháp tập trung, nơi khách hàng có thể dễ dàng xem dịch vụ, đặt lịch hẹn, và theo dõi trạng thái đơn hàng của mình. Đồng thời, hệ thống cung cấp cho quản trị viên (Admin) một bảng điều khiển mạnh mẽ để quản lý dịch vụ, xử lý đơn đặt lịch và xem thống kê kinh doanh.
 
-## 🔧 2. Các công nghệ được sử dụng
-<div align="center">
+## ✨ 2. Tính năng Nổi bật
 
-### Hệ điều hành
-![macOS](https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=macos&logoColor=F0F0F0)
-[![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)](https://www.microsoft.com/en-us/windows/)
-[![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)](https://ubuntu.com/)
+Hệ thống được phân chia làm 2 vai trò chính với các chức năng rõ rệt:
 
-### Công nghệ chính
-[![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://www.php.net/)
-[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](#)
-[![CSS](https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css3&logoColor=white)](#)
-[![SCSS](https://img.shields.io/badge/SCSS-CC6699?style=for-the-badge&logo=sass&logoColor=white)](#)
-[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](#)
+| 👨‍💻 Chức năng Khách hàng (User) | ⚙️ Chức năng Quản trị (Admin) |
+| :--- | :--- |
+| ✅ Đăng ký / Đăng nhập (Băm mật khẩu) | ✅ **Dashboard Tổng quan** (KPIs, Doanh thu, Đơn mới) |
+| ✅ Trang chủ (Giới thiệu, Quy trình) | ✅ **Quản lý Đơn hàng** (Giao diện Tab: Mới, Đang xử lý...) |
+| ✅ Xem chi tiết tất cả Dịch vụ (có hình ảnh) | ✅ **Cập nhật Trạng thái** đơn hàng (Pending -> Completed...) |
+| ✅ Đặt lịch hẹn (Form chuyên nghiệp) | ✅ Thống kê Dịch vụ "Hot", Khách hàng "VIP" |
+| ✅ Chọn Loại thiết bị (PC/Laptop) | ✅ **Quản lý Dịch vụ (CRUD)**: Thêm / Sửa / Xóa Dịch vụ |
+| ✅ Chọn Hình thức (Tại nhà / Mang đến) | ✅ Thao tác nhanh (Sửa/Xóa Dịch vụ) ngay trên Dashboard |
+| ✅ **Lịch sử Đặt lịch** (Theo dõi trạng thái) | ✅ **Quản lý Tài khoản (CRUD)**: Xem / Xóa / Phân quyền |
+| ✅ Hủy đơn hàng (nếu đang chờ xử lý) | ✅ Bảo vệ trang Admin (Chỉ `role` admin được vào) |
+| ✅ Cập nhật thông tin cá nhân (Profile) | ✅ Bảo mật chống SQL Injection (Prepared Statements) |
+| ✅ Thay đổi mật khẩu (Xác thực mật khẩu cũ) | ✅ Giao diện Admin Menu (Dính, dễ điều hướng) |
 
-### Web Server & Database
-[![Apache](https://img.shields.io/badge/Apache-D22128?style=for-the-badge&logo=apache&logoColor=white)](https://httpd.apache.org/)
-[![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/) 
-[![XAMPP](https://img.shields.io/badge/XAMPP-FB7A24?style=for-the-badge&logo=xampp&logoColor=white)](https://www.apachefriends.org/)
+## 🚀 3. Công nghệ sử dụng
 
-### Database Management Tools
-[![MySQL Workbench](https://img.shields.io/badge/MySQL_Workbench-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://dev.mysql.com/downloads/workbench/)
-</div>
+* **Backend:** **PHP 8.0** (Xử lý logic, quản lý phiên).
+* **Database:** **MySQL** (Lưu trữ dữ liệu người dùng, dịch vụ, đơn hàng).
+* **Frontend:** **HTML5**, **CSS3** (Flexbox/Grid, Animations), **JavaScript (ES6)** (Tương tác form, tính tổng tiền động).
+* **Web Server:** **XAMPP** (Sử dụng Apache & MySQL).
+* **Tools:** Visual Studio Code, Git & GitHub.
 
-## 🚀 3. Hình ảnh các chức năng
+## 📁 4. Cấu trúc Thư mục
+
+Dự án được tổ chức theo cấu trúc gọn gàng, tách biệt logic và giao diện:
+Chào bạn. Đây là một ý tưởng rất hay. File README.md cũ của bạn (mà tôi đã giúp bạn tạo) đang dùng chung mẫu của một đề tài khác.
+
+Dưới đây là một file README.md hoàn toàn mới, được thiết kế lại 100% để tập trung vào đúng đề tài "Quản lý Dịch vụ Chăm sóc Máy tính" của bạn.
+
+Nó bao gồm các phần chuyên nghiệp như:
+
+Banner & Badges (Huy hiệu): Một ảnh bìa đẹp và các huy hiệu công nghệ.
+
+Mục lục (Table of Contents): Giúp người đọc dễ dàng điều hướng.
+
+Tính năng Nổi bật: Liệt kê rõ ràng các chức năng của Admin và User (phần này rất quan trọng).
+
+Cấu trúc Thư mục: Giải thích cách bạn tổ chức code (chúng ta vừa làm).
+
+Hướng dẫn Cài đặt (Cập nhật): Hướng dẫn đầy đủ, bao gồm cả bước import CSDL và tài khoản admin.
+
+Code README.md (Thiết kế mới)
+Hãy xóa toàn bộ nội dung file README.md cũ của bạn và dán code mới dưới đây vào.
+
+(Lưu ý: Tôi giả định bạn đã đổi tên các ảnh chụp màn hình và đặt chúng trong thư mục images/ như trong file bạn gửi lên.)
+
+Markdown
+
+<h1 align="center">
+  🖥️ Hệ thống Quản lý Dịch vụ Chăm sóc Máy tính (Computer Care) 🖥️
+</h1>
+
+<p align="center">
+  Một ứng dụng web PHP/MySQL (sử dụng XAMPP) được xây dựng để tin học hóa quy trình đặt lịch và quản lý dịch vụ sửa chữa, bảo trì máy tính.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/PHP-8.0%2B-777BB4?style=for-the-badge&logo=php" alt="PHP 8.0+">
+  <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL">
+  <img src="https://img.shields.io/badge/Frontend-HTML%2CSS%2CJS-E34F26?style=for-the-badge&logo=html5" alt="Frontend">
+  <img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" alt="License: MIT">
+</p>
+
+<p align="center">
+  <img alt="Project Banner" src="images/dashboard.png">
+</p>
+
+---
+
+## 📋 Mục lục
+
+1.  [Giới thiệu](#-1-giới-thiệu)
+2.  [Tính năng Nổi bật](#-2-tính-năng-nổi-bật)
+3.  [Công nghệ sử dụng](#-3-công-nghệ-sử-dụng)
+4.  [Cấu trúc Thư mục](#-4-cấu-trúc-thư-mục)
+5.  [Hướng dẫn Cài đặt](#-5-hướng-dẫn-cài-đặt)
+6.  [Hình ảnh Chức năng](#-6-hình-ảnh-chức-năng)
+7.  [Tác giả](#-7-tác-giả)
+
+---
+
+## 📖 1. Giới thiệu
+
+Hệ thống **Quản lý Dịch vụ Chăm sóc Máy tính (Computer Care)** được xây dựng nhằm mục đích tin học hóa quy trình đặt lịch và quản lý dịch vụ sửa chữa, bảo trì máy tính chuyên nghiệp. Thay vì quản lý thủ công qua điện thoại hoặc tin nhắn rời rạc, hệ thống mang đến một giải pháp tập trung, nơi khách hàng có thể dễ dàng xem dịch vụ, đặt lịch hẹn, và theo dõi trạng thái đơn hàng của mình. Đồng thời, hệ thống cung cấp cho quản trị viên (Admin) một bảng điều khiển mạnh mẽ để quản lý dịch vụ, xử lý đơn đặt lịch và xem thống kê kinh doanh.
+
+## ✨ 2. Tính năng Nổi bật
+
+Hệ thống được phân chia làm 2 vai trò chính với các chức năng rõ rệt:
+
+| 👨‍💻 Chức năng Khách hàng (User) | ⚙️ Chức năng Quản trị (Admin) |
+| :--- | :--- |
+| ✅ Đăng ký / Đăng nhập (Băm mật khẩu) | ✅ **Dashboard Tổng quan** (KPIs, Doanh thu, Đơn mới) |
+| ✅ Trang chủ (Giới thiệu, Quy trình) | ✅ **Quản lý Đơn hàng** (Giao diện Tab: Mới, Đang xử lý...) |
+| ✅ Xem chi tiết tất cả Dịch vụ (có hình ảnh) | ✅ **Cập nhật Trạng thái** đơn hàng (Pending -> Completed...) |
+| ✅ Đặt lịch hẹn (Form chuyên nghiệp) | ✅ Thống kê Dịch vụ "Hot", Khách hàng "VIP" |
+| ✅ Chọn Loại thiết bị (PC/Laptop) | ✅ **Quản lý Dịch vụ (CRUD)**: Thêm / Sửa / Xóa Dịch vụ |
+| ✅ Chọn Hình thức (Tại nhà / Mang đến) | ✅ Thao tác nhanh (Sửa/Xóa Dịch vụ) ngay trên Dashboard |
+| ✅ **Lịch sử Đặt lịch** (Theo dõi trạng thái) | ✅ **Quản lý Tài khoản (CRUD)**: Xem / Xóa / Phân quyền |
+| ✅ Hủy đơn hàng (nếu đang chờ xử lý) | ✅ Bảo vệ trang Admin (Chỉ `role` admin được vào) |
+| ✅ Cập nhật thông tin cá nhân (Profile) | ✅ Bảo mật chống SQL Injection (Prepared Statements) |
+| ✅ Thay đổi mật khẩu (Xác thực mật khẩu cũ) | ✅ Giao diện Admin Menu (Dính, dễ điều hướng) |
+
+## 🚀 3. Công nghệ sử dụng
+
+* **Backend:** **PHP 8.0** (Xử lý logic, quản lý phiên).
+* **Database:** **MySQL** (Lưu trữ dữ liệu người dùng, dịch vụ, đơn hàng).
+* **Frontend:** **HTML5**, **CSS3** (Flexbox/Grid, Animations), **JavaScript (ES6)** (Tương tác form, tính tổng tiền động).
+* **Web Server:** **XAMPP** (Sử dụng Apache & MySQL).
+* **Tools:** Visual Studio Code, Git & GitHub.
+
+## 📁 4. Cấu trúc Thư mục
+
+Dự án được tổ chức theo cấu trúc gọn gàng, tách biệt logic và giao diện:
+
+/computer_service/ ├── admin/ (Trang Quản trị) │ ├── index.php (Dashboard, QL Đơn hàng) │ ├── services.php (QL Dịch vụ) │ ├── users.php (QL User) │ └── admin_check.php (File bảo vệ) │ ├── config/ │ └── db.php (Kết nối CSDL & BASE_URL) │ ├── page/ (Các trang chức năng của User) │ ├── login.php │ ├── register.php │ ├── profile.php │ ├── booking.php │ ├── my_bookings.php │ ├── services.php │ └── ... │ ├── templates/ (Header & Footer chung) │ ├── header.php │ └── footer.php │ ├── images/ (Ảnh chụp màn hình cho README) │ ├── dashboard.png │ └── ... │ ├── index.php (Trang chủ công khai) └── README.md
+## ⚙️ 5. Hướng dẫn Cài đặt
+
+### 5.1. Yêu cầu
+* **XAMPP** (Khuyến nghị bản hỗ trợ PHP 8.0+).
+* Một trình duyệt web (Chrome, Firefox...).
+* Trình soạn thảo code (VS Code).
+
+### 5.2. Các bước Cài đặt
+
+**1. Tải Project:**
+* Clone dự án này về máy: `git clone [URL_CUA_BAN]`
+* Hoặc tải file ZIP và giải nén.
+
+**2. Di chuyển Project:**
+* Copy thư mục `computer_service` vào `C:\xampp\htdocs\`.
+
+**3. Khởi động Server:**
+* Mở **XAMPP Control Panel** và **Start** 2 module: **Apache** và **MySQL**.
+
+**4. Cài đặt Database:**
+* Mở trình duyệt, truy cập `http://localhost/phpmyadmin/`.
+* Tạo một database mới với tên: **`computer_service_db`** (Chọn Collation là `utf8mb4_unicode_ci`).
+* Chọn database vừa tạo, mở tab **"SQL"**.
+* Copy và chạy toàn bộ code SQL (mà tôi đã cung cấp) để tạo các bảng: `users`, `services`, `bookings`, `contacts`, `posts`.
+* *Lưu ý: Chạy cả code `INSERT` mẫu để có dữ liệu.*
+
+**5. Cấu hình Kết nối (`config/db.php`):**
+* Mở file `config/db.php` và đảm bảo các thông tin sau chính xác với XAMPP của bạn:
+    ```php
+    define('BASE_URL', 'http://localhost/computer_service/');
+    $host = "localhost";
+    $user = "root"; 
+    $password = "Hop13102005@"; // <- Mật khẩu MySQL của bạn
+    $dbname = "computer_service_db";
+    ```
+
+**6. Chạy Hệ thống:**
+* Mở trình duyệt và truy cập: `http://localhost/computer_service/`
+
+**7. Tài khoản Admin:**
+* Tài khoản Admin mẫu (được tạo từ file SQL):
+* **Username:** `admin`
+* **Password:** `admin123`
+
+---
+
+## 📸 6. Hình ảnh Chức năng
+
+*(Tôi giữ lại các đường dẫn `images/...` như trong file bạn gửi)*
+
 ### Trang đăng nhập
-<img width="1902" height="931" alt="image" src=images/trang_dang_nhap.png />
+<img alt="Trang đăng nhập" src="images/trang_dang_nhap.png" />
+
 ### Trang đăng ký
-<img width="1902" height="931" alt="image" src=images/trang_dang_ky.png />
-### Trang chủ
-<img width="1902" height="931" alt="image" src=images/trang_chu.png />
-### Trang profile
-<img width="1902" height="931" alt="image" src=images/profile.png />
-### Trang giao diện Admin
-<img width="1902" height="931" alt="image" src=images/dashboard.png />
-### Trang các dịch vụ
-<img width="1902" height="931" alt="image" src=images/dich_vu.png />
-### Trang lịch sử đặt hàng
-<img width="1902" height="931" alt="image" src=images/lich_su_dat_hang.png />
-### Trang liên hệ
-<img width="1902" height="931" alt="image" src=images/contact.png />
-### Đổi mật khẩu
-<img width="1902" height="931" alt="image" src=images/change_password.png />
-### Footer của trang
-<img width="1902" height="931" alt="image" src=images/footer.png />
-## ⚙️ 4. Cài đặt
+<img alt="Trang đăng ký" src="images/trang_dang_ky.png" />
 
-### 4.1. Cài đặt công cụ, môi trường và các thư viện cần thiết
+### Trang chủ (Đã nâng cấp)
+<img alt="Trang chủ" src="images/trang_chu.png" />
 
-- Tải và cài đặt **XAMPP**  
-  👉 https://www.apachefriends.org/download.html  
-  (Khuyến nghị bản XAMPP với PHP 8.x)
+### Trang Profile & Đổi mật khẩu
+<img alt="Trang profile" src="images/profile.png" />
+<img alt="Đổi mật khẩu" src="images/change_password.png" />
 
-- Cài đặt **Visual Studio Code** và các extension:
-  - PHP Intelephense  
-  - MySQL  
-  - Prettier – Code Formatter  
-### 4.2. Tải project
-### 4.3. Setup database
-Mở XAMPP Control Panel, Start Apache và MySQL
+### Trang Chi tiết Dịch vụ (Nâng cấp)
+<img alt="Trang các dịch vụ" src="images/dich_vu.png" />
 
-Truy cập MySQL WorkBench
-Tạo database:
-```bash
-CREATE DATABASE IF NOT EXISTS computer_service_db
-   CHARACTER SET utf8mb4
-   COLLATE utf8mb4_unicode_ci;
-```
+### Trang Lịch sử Đặt hàng
+<img alt="Trang lịch sử đặt hàng" src="images/lich_su_dat_hang.png" />
 
-### 4.4. Setup tham số kết nối
-Mở file db.php trong project, chỉnh thông tin DB:
-```bash
+### Trang Liên hệ
+<img alt="Trang liên hệ" src="images/contact.png" />
 
-<?php
-define('BASE_URL', 'http://localhost/computer_service/');
+### Trang Dashboard Admin (Chuyên nghiệp)
+<img alt="Trang giao diện Admin" src="images/dashboard.png" />
 
-$host = "localhost";
-$user = "root"; 
-$password = "Hop13102005@"; 
-$dbname = "computer_service_db";
+### Footer (Nâng cấp)
+<img alt="Footer của trang" src="images/footer.png" />
 
-$conn = new mysqli($host, $user, $password, $dbname);
+---
 
-if ($conn->connect_error) {
-    die("Kết nối thất bại: " . $conn->connect_error);
-}
-?>
-```
-### 4.5. Chạy hệ thống
-Mở XAMPP Control Panel → Start Apache và MySQL
+## 👨‍💼 7. Tác giả
 
-Truy cập hệ thống:
-👉 http://localhost/index.php
-
-### 4.6. Đăng nhập lần đầu
-    
-
-
-
-
-
+* **Họ và Tên:** Nguyễn Đức Hợp - Nguyễn Thái Sơn
+* **MSSV:** 1771020309 - 1771020592
+* **Lớp:** CNTT 17-09
+* **Giảng viên hướng dẫn:** Ths. Lê Tuấn Anh
