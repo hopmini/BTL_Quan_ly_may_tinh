@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <img alt="Project Banner" src="images/dashboard.png">
+  <img alt="Project Banner" src="images/trang_chu.png">
 </p>
 
 ---
@@ -136,5 +136,6 @@ Hệ thống được phân chia làm 2 vai trò chính với các chức năng 
 
 ### Footer (Nâng cấp)
 <img alt="Footer của trang" src="images/footer.png" />
+
 
 
