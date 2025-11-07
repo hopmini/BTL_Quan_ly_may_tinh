@@ -27,7 +27,6 @@
 4.  [Cấu trúc Thư mục](#-4-cấu-trúc-thư-mục)
 5.  [Hướng dẫn Cài đặt](#-5-hướng-dẫn-cài-đặt)
 6.  [Hình ảnh Chức năng](#-6-hình-ảnh-chức-năng)
-7.  [Tác giả](#-7-tác-giả)
 
 ---
 
@@ -61,10 +60,6 @@ Hệ thống được phân chia làm 2 vai trò chính với các chức năng 
 * **Tools:** Visual Studio Code, Git & GitHub.
 
 ## 📁 4. Cấu trúc Thư mục
-
-Dự án được tổ chức theo cấu trúc gọn gàng, tách biệt logic và giao diện:
-
-/computer_service/ ├── admin/ (Trang Quản trị) │ ├── index.php (Dashboard, QL Đơn hàng) │ ├── services.php (QL Dịch vụ) │ ├── users.php (QL User) │ └── admin_check.php (File bảo vệ) │ ├── config/ │ └── db.php (Kết nối CSDL & BASE_URL) │ ├── page/ (Các trang chức năng của User) │ ├── login.php │ ├── register.php │ ├── profile.php │ ├── booking.php │ ├── my_bookings.php │ ├── services.php │ └── ... │ ├── templates/ (Header & Footer chung) │ ├── header.php │ └── footer.php │ ├── images/ (Ảnh chụp màn hình cho README) │ ├── dashboard.png │ └── ... │ ├── index.php (Trang chủ công khai) └── README.md
 ## ⚙️ 5. Hướng dẫn Cài đặt
 
 ### 5.1. Yêu cầu
@@ -118,34 +113,28 @@ Dự án được tổ chức theo cấu trúc gọn gàng, tách biệt logic v
 ### Trang đăng ký
 <img alt="Trang đăng ký" src="images/trang_dang_ky.png" />
 
-### Trang chủ (Đã nâng cấp)
+### Trang chủ
 <img alt="Trang chủ" src="images/trang_chu.png" />
 
 ### Trang Profile & Đổi mật khẩu
 <img alt="Trang profile" src="images/profile.png" />
 <img alt="Đổi mật khẩu" src="images/change_password.png" />
 
-### Trang Chi tiết Dịch vụ (Nâng cấp)
-<img alt="Trang các dịch vụ" src="images/dich_vu.png" />
+### Trang Chi tiết Dịch vụ
+<img alt="Trang các dịch vụ" src="images/services.png" />
 
 ### Trang Lịch sử Đặt hàng
-<img alt="Trang lịch sử đặt hàng" src="images/lich_su_dat_hang.png" />
+<img alt="Trang lịch sử đặt hàng" src="images/lich_su_dat_lich.png" />
 
 ### Trang Liên hệ
 <img alt="Trang liên hệ" src="images/contact.png" />
 
-### Trang Dashboard Admin (Chuyên nghiệp)
-<img alt="Trang giao diện Admin" src="images/dashboard.png" />
+### Trang Dashboard Admin
+<img alt="Trang giao diện Admin" src="images/admin_dashboard.png" />
+<img alt="Trang giao diện Admin" src="images/admin_services.png" />
+<img alt="Trang giao diện Admin" src="images/admin_users.png" />
 
 ### Footer (Nâng cấp)
 <img alt="Footer của trang" src="images/footer.png" />
 
----
-
-## 👨‍💼 7. Tác giả
-
-* **Họ và Tên:** Nguyễn Đức Hợp - Nguyễn Thái Sơn
-* **MSSV:** 1771020309 - 1771020592
-* **Lớp:** CNTT 17-09
-* **Giảng viên hướng dẫn:** Ths. Lê Tuấn Anh
 
