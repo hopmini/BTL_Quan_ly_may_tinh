@@ -393,15 +393,35 @@ if (session_status() == PHP_SESSION_NONE) {
                     <i class="fas fa-phone"></i>
                     <span>Liên hệ</span>
                 </a>
+                <a href="<?php echo BASE_URL; ?>page/blog.php" class="<?php echo (basename($_SERVER['PHP_SELF']) == 'blog.php') ? 'active' : ''; ?>">
+                        <i class="fas fa-newspaper"></i> <span>Blog</span>
+                    </a>
             </nav>
 
             <?php if (isset($_SESSION['user_id'])): ?>
-                <div class="user-section" id="userSection">
-                    
-                    <button class="notification-btn">
-                        <i class="fas fa-bell"></i>
-                        <span class="notification-badge">3</span> 
-                    </button>
+
+    <?php
+    // =============================================
+    // ===== BẮT ĐẦU: LẤY SỐ THÔNG BÁO CHƯA ĐỌC =====
+    // =============================================
+    $current_user_id = $_SESSION['user_id'];
+    $stmt_count = $conn->prepare("SELECT COUNT(id) as unread_count FROM notifications WHERE user_id = ? AND is_read = 0");
+    $stmt_count->bind_param("i", $current_user_id);
+    $stmt_count->execute();
+    $unread_count = $stmt_count->get_result()->fetch_assoc()['unread_count'];
+    $stmt_count->close();
+    // =============================================
+    ?>
+
+    <div class="user-section" id="userSection">
+
+        <a href="<?php echo BASE_URL; ?>page/notifications.php" class="notification-btn" title="Thông báo">
+            <i class="fas fa-bell"></i>
+
+            <?php if ($unread_count > 0): ?>
+                <span class="notification-badge"><?php echo $unread_count; ?></span> 
+            <?php endif; ?>
+        </a>
                     
                     <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
                         <a href="<?php echo BASE_URL; ?>admin/index.php" class="icon-btn btn-register" data-tooltip="Trang Quản lý Admin">

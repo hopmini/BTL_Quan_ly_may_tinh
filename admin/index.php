@@ -4,11 +4,14 @@ require '../config/db.php'; // 2. KẾT NỐI CSDL
 
 $message = '';
 $error = '';
+// Lấy tab hiện tại (QUAN TRỌNG: Phải lấy trước khi xử lý GET/POST để redirect cho đúng)
+$current_tab = isset($_GET['tab']) ? $_GET['tab'] : 'all';
 
-// === 1. XỬ LÝ CẬP NHẬT TRẠNG THÁI (POST) ===
+// === 1. XỬ LÝ HÀNH ĐỘNG (POST & GET) ===
+
+// A. XỬ LÝ POST (Cập nhật Trạng thái)
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
     
-    // A. Xử lý Cập nhật TRẠNG THÁI ĐƠN HÀNG
     if ($_POST['action'] == 'update_status' && isset($_POST['booking_id']) && isset($_POST['new_status'])) {
         $booking_id = (int)$_POST['booking_id'];
         $new_status = $_POST['new_status'];
@@ -16,9 +19,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
         $stmt_update = $conn->prepare("UPDATE bookings SET status = ? WHERE id = ?");
         if ($stmt_update) {
             $stmt_update->bind_param("si", $new_status, $booking_id);
-            if($stmt_update->execute()) {
-                $message = "Cập nhật trạng thái thành công!";
-            } else {
+            // ...
+if($stmt_update->execute()) {
+    $message = "Cập nhật trạng thái thành công!";
+
+    // =======================================================
+    // ===== BẮT ĐẦU: GỬI THÔNG BÁO CHO KHÁCH HÀNG =====
+    // =======================================================
+
+    // 1. Lấy user_id của đơn hàng này
+    $user_id_result = $conn->query("SELECT user_id FROM bookings WHERE id = $booking_id");
+    $user_id_to_notify = $user_id_result->fetch_assoc()['user_id'];
+
+    // 2. Dịch trạng thái mới ra Tiếng Việt
+    $status_text = translate_status($new_status)['text'];
+
+    // 3. Chuẩn bị tin nhắn và link
+    $notify_message = "Đơn hàng #$booking_id của bạn đã được cập nhật thành: '$status_text'";
+    $notify_link = "page/my_bookings.php";
+
+    // 4. Gửi thông báo cho khách hàng đó
+    $stmt_notify = $conn->prepare("INSERT INTO notifications (user_id, message, link) VALUES (?, ?, ?)");
+    $stmt_notify->bind_param("iss", $user_id_to_notify, $notify_message, $notify_link);
+    $stmt_notify->execute();
+    $stmt_notify->close();
+
+    // =======================================================
+    // ===== KẾT THÚC: GỬI THÔNG BÁO CHO KHÁCH HÀNG =====
+    // =======================================================
+
+} else {
+// ...
                 $error = "Lỗi khi cập nhật trạng thái.";
             }
             $stmt_update->close();
@@ -26,20 +57,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
     }
 }
 
+// B. NÂNG CẤP: XỬ LÝ GET (Xóa Đơn hàng đã hoàn thành)
+if (isset($_GET['action']) && $_GET['action'] == 'delete_booking' && isset($_GET['id'])) {
+    $booking_id_to_delete = (int)$_GET['id'];
+    
+    // Chỉ cho phép xóa đơn 'completed' (hoặc 'cancelled' nếu bạn muốn)
+    $stmt_delete = $conn->prepare("DELETE FROM bookings WHERE id = ? AND status = 'completed'");
+    if ($stmt_delete) {
+        $stmt_delete->bind_param("i", $booking_id_to_delete);
+        if ($stmt_delete->execute()) {
+            $message = "Xóa đơn hàng (ID: $booking_id_to_delete) thành công!";
+        } else {
+            $error = "Lỗi khi xóa đơn hàng: " . $stmt_delete->error;
+        }
+        $stmt_delete->close();
+    }
+    
+    // Chuyển hướng lại trang Dashboard (để xóa tham số GET và giữ đúng tab)
+    $redirect_url = $message ? '?message=' . urlencode($message) : '?error=' . urlencode($error);
+    header('Location: ' . BASE_URL . 'admin/index.php' . $redirect_url . '&tab=' . $current_tab);
+    exit();
+}
+
+
 // === 2. LẤY DỮ LIỆU THỐNG KÊ (KPIs) ===
+// (Giữ nguyên các truy vấn KPI của bạn)
 $revenue_result = $conn->query("SELECT SUM(s.price) as total_revenue FROM bookings b JOIN services s ON b.service_id = s.id WHERE b.status = 'completed'");
 $total_revenue = $revenue_result->fetch_assoc()['total_revenue'] ?? 0;
 $total_bookings_result = $conn->query("SELECT COUNT(id) as total_bookings FROM bookings");
 $total_bookings = $total_bookings_result->fetch_assoc()['total_bookings'] ?? 0;
-$new_bookings_result = $conn->query("SELECT COUNT(id) as new_bookings FROM bookings WHERE status = 'pending'");
+// NÂNG CẤP: Đếm cả 2 loại đơn chờ (pending và pending_cancellation)
+$new_bookings_result = $conn->query("SELECT COUNT(id) as new_bookings FROM bookings WHERE status = 'pending' OR status = 'pending_cancellation'");
 $new_bookings_count = $new_bookings_result->fetch_assoc()['new_bookings'] ?? 0;
 $total_users_result = $conn->query("SELECT COUNT(id) as total_users FROM users WHERE role = 'user'");
 $total_users = $total_users_result->fetch_assoc()['total_users'] ?? 0;
 
 
 // === 3. LẤY DỮ LIỆU CHO CÁC BOX TÓM TẮT ===
-
-// KHU VỰC 1: DỊCH VỤ ĐƯỢC ĐẶT NHIỀU NHẤT (TOP 5)
+// (Giữ nguyên)
 $top_services_result = $conn->query(
     "SELECT s.id, s.name, COUNT(b.service_id) as booking_count
      FROM bookings b
@@ -49,8 +104,6 @@ $top_services_result = $conn->query(
      LIMIT 5"
 );
 $top_services = $top_services_result->fetch_all(MYSQLI_ASSOC);
-
-// KHU VỰC 2: KHÁCH HÀNG ĐẶT NHIỀU NHẤT (TOP 5)
 $top_users_result = $conn->query(
     "SELECT u.name, u.email, COUNT(b.user_id) as booking_count
      FROM bookings b
@@ -62,13 +115,14 @@ $top_users_result = $conn->query(
 $top_users = $top_users_result->fetch_all(MYSQLI_ASSOC);
 
 
-// === 4. LẤY DANH SÁCH ĐƠN HÀNG (THEO TAB) ===
-$current_tab = isset($_GET['tab']) ? $_GET['tab'] : 'all'; // Tab mặc định là 'all'
+// === 4. LẤY DANH SÁCH ĐƠN HÀNG (THEO TAB) [ĐÃ SỬA] ===
 $where_clause = ''; // Mệnh đề WHERE cho SQL
 
+// NÂNG CẤP: Thêm trạng thái 'pending_cancellation'
 switch ($current_tab) {
     case 'pending':
-        $where_clause = "WHERE b.status = 'pending'";
+        // Tab "Chờ xử lý" giờ bao gồm cả "Chờ xác nhận" VÀ "Chờ hủy"
+        $where_clause = "WHERE b.status IN ('pending', 'pending_cancellation')";
         break;
     case 'processing':
         $where_clause = "WHERE b.status IN ('confirmed', 'processing')";
@@ -77,11 +131,13 @@ switch ($current_tab) {
         $where_clause = "WHERE b.status = 'completed'";
         break;
     case 'cancelled':
+        // Tab "Đã hủy" CHỈ hiển thị đơn đã hủy
         $where_clause = "WHERE b.status = 'cancelled'";
         break;
     case 'all':
     default:
-        $where_clause = ""; // Không có WHERE, lấy tất cả
+        // SỬA LỖI: Tab "Tất cả" sẽ ẨN CÁC ĐƠN ĐÃ HỦY
+        $where_clause = "WHERE b.status != 'cancelled'";
         break;
 }
 
@@ -104,7 +160,7 @@ $all_bookings = $all_bookings_result->fetch_all(MYSQLI_ASSOC);
 $stmt_all_bookings->close();
 
 
-// (Hàm dịch trạng thái và mảng status giữ nguyên)
+// NÂNG CẤP: Cập nhật hàm dịch trạng thái và mảng tùy chọn
 function translate_status($status) {
     switch ($status) {
         case 'pending': return ['text' => 'Chờ xác nhận', 'color' => '#f39c12'];
@@ -112,10 +168,12 @@ function translate_status($status) {
         case 'processing': return ['text' => 'Đang xử lý', 'color' => '#8e44ad'];
         case 'completed': return ['text' => 'Đã hoàn thành', 'color' => '#27ae60'];
         case 'cancelled': return ['text' => 'Đã hủy', 'color' => '#c0392b'];
+        case 'pending_cancellation': return ['text' => 'CHỜ HỦY', 'color' => '#e67e22']; // Thêm trạng thái mới
         default: return ['text' => ucfirst($status), 'color' => '#7f8c8d'];
     }
 }
-$status_options = ['pending', 'confirmed', 'processing', 'completed', 'cancelled'];
+// Thêm trạng thái mới vào mảng tùy chọn
+$status_options = ['pending', 'confirmed', 'processing', 'completed', 'cancelled', 'pending_cancellation'];
 
 include '../templates/header.php'; // 5. HIỂN THỊ GIAO DIỆN
 ?>
@@ -131,35 +189,34 @@ include '../templates/header.php'; // 5. HIỂN THỊ GIAO DIỆN
         <a href="<?php echo BASE_URL; ?>admin/users.php">
             <i class="fas fa-users-cog"></i> Quản lý User
         </a>
+        <a href="<?php echo BASE_URL; ?>admin/contacts.php">
+            <i class="fas fa-envelope"></i> Quản lý Tin nhắn
+        </a>
+        <a href="<?php echo BASE_URL; ?>admin/posts.php">
+            <i class="fas fa-newspaper"></i> Quản lý Blog
+        </a>
     </div>
 </div>
 <style>
-/* === CSS CHO MENU ADMIN (MỚI) === */
+/* === CSS CHO MENU ADMIN (ĐÃ SỬA LỖI) === */
 .admin-nav {
     background: #343a40;
     padding: 10px 0;
-
-    /* 1. Biến nó thành thanh "dính" */
     position: sticky; 
-
-    /* 2. Dính vào vị trí 72px (chiều cao của header) */
     top: 72px; 
-
-    /* 3. Đặt z-index thấp hơn header (header là 1000) */
     z-index: 999; 
-
-    margin-bottom: 30px; /* Giữ lại margin-bottom */
+    margin-bottom: 30px;
 }
 .admin-nav-container {
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 20px;
     display: flex;
-    justify-content: center; /* Căn giữa menu */
+    justify-content: center;
     gap: 15px;
 }
 .admin-nav a {
-    color: #f8f9fa; /* Màu chữ sáng */
+    color: #f8f9fa;
     text-decoration: none;
     padding: 12px 20px;
     border-radius: 8px;
@@ -168,10 +225,10 @@ include '../templates/header.php'; // 5. HIỂN THỊ GIAO DIỆN
     transition: background-color 0.3s ease;
 }
 .admin-nav a:hover {
-    background-color: #495057; /* Màu nền khi hover */
+    background-color: #495057;
 }
 .admin-nav a.active {
-    background-color: var(--primary, #4F46E5); /* Dùng màu chủ đạo */
+    background-color: var(--primary, #4F46E5);
     color: white;
 }
 /* === HẾT CSS MENU ADMIN === */
@@ -211,7 +268,9 @@ include '../templates/header.php'; // 5. HIỂN THỊ GIAO DIỆN
 .summary-list .item-info span { font-size: 12px; color: var(--text-light); display: block; }
 .summary-list .item-count { font-size: 16px; font-weight: 700; color: var(--primary); }
 .service-quick-actions { display: flex; gap: 8px; align-items: center; }
-.service-quick-actions .btn-action {
+
+/* NÂNG CẤP: CSS cho nút Sửa/Xóa (Sử dụng chung) */
+.btn-action {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -222,16 +281,17 @@ include '../templates/header.php'; // 5. HIỂN THỊ GIAO DIỆN
     font-size: 13px;
     transition: all 0.3s ease;
 }
-.service-quick-actions .btn-edit { background: #e0f2fe; color: #2980b9; }
-.service-quick-actions .btn-edit:hover { background: #2980b9; color: white; }
-.service-quick-actions .btn-delete { background: #fee; color: #c0392b; }
-.service-quick-actions .btn-delete:hover { background: #c0392b; color: white; }
+.btn-edit { background: #e0f2fe; color: #2980b9; }
+.btn-edit:hover { background: #2980b9; color: white; }
+.btn-delete { background: #fee; color: #c0392b; }
+.btn-delete:hover { background: #c0392b; color: white; }
+
 
 /* NÂNG CẤP: CSS cho Tab điều hướng bảng */
 .table-tabs {
     display: flex;
     gap: 5px;
-    margin-bottom: -1px; /* Để nó đè lên border của box */
+    margin-bottom: -1px; 
     position: relative;
     z-index: 2;
 }
@@ -250,7 +310,7 @@ include '../templates/header.php'; // 5. HIỂN THỊ GIAO DIỆN
 .table-tabs a.active {
     color: var(--primary);
     background: white;
-    border-bottom-color: white; /* Che đường viền */
+    border-bottom-color: white; 
 }
 .table-tabs a:hover:not(.active) {
     background: #eee;
@@ -270,8 +330,8 @@ include '../templates/header.php'; // 5. HIỂN THỊ GIAO DIỆN
     padding: 12px 15px;
     text-align: left;
     border-bottom: 1px solid #eee;
-    vertical-align: top; /* Căn trên cho dễ đọc */
-    white-space: nowrap; /* Ngăn vỡ dòng */
+    vertical-align: top; 
+    white-space: nowrap; 
 }
 .admin-table th { background-color: #f8f9fa; color: var(--text-light); font-size: 12px; font-weight: 600; text-transform: uppercase; }
 .admin-table td { font-size: 14px; color: var(--text-dark); }
@@ -335,7 +395,7 @@ include '../templates/header.php'; // 5. HIỂN THỊ GIAO DIỆN
             </div>
             
             <div class="table-tabs">
-                <a href="<?php echo BASE_URL; ?>admin/index.php?tab=all" class="<?php echo ($current_tab == 'all') ? 'active' : ''; ?>">Tất cả</a>
+                <a href="<?php echo BASE_URL; ?>admin/index.php?tab=all" class="<?php echo ($current_tab == 'all') ? 'active' : ''; ?>">Tất cả (Hoạt động)</a>
                 <a href="<?php echo BASE_URL; ?>admin/index.php?tab=pending" class="<?php echo ($current_tab == 'pending') ? 'active' : ''; ?>">Chờ xử lý (<?php echo $new_bookings_count; ?>)</a>
                 <a href="<?php echo BASE_URL; ?>admin/index.php?tab=processing" class="<?php echo ($current_tab == 'processing') ? 'active' : ''; ?>">Đang thực hiện</a>
                 <a href="<?php echo BASE_URL; ?>admin/index.php?tab=completed" class="<?php echo ($current_tab == 'completed') ? 'active' : ''; ?>">Đã hoàn thành</a>
@@ -347,19 +407,17 @@ include '../templates/header.php'; // 5. HIỂN THỊ GIAO DIỆN
                     <thead>
                         <tr>
                             <th>Khách hàng</th>
-                            <th>Liên hệ</th>
                             <th>Dịch vụ</th>
                             <th>Giá tiền</th>
                             <th>Thiết bị</th>
-                            <th>Hình thức</th>
                             <th>Ngày hẹn</th>
                             <th>Ghi chú</th>
                             <th>Cập nhật Trạng thái</th>
-                        </tr>
+                            <th>Hành động</th> </tr>
                     </thead>
                     <tbody>
                         <?php if (empty($all_bookings)): ?>
-                            <tr><td colspan="9" style="text-align: center; padding: 20px;">Không có đơn hàng nào trong mục này.</td></tr>
+                            <tr><td colspan="10" style="text-align: center; padding: 20px;">Không có đơn hàng nào trong mục này.</td></tr>
                         <?php endif; ?>
 
                         <?php foreach ($all_bookings as $booking): ?>
@@ -371,7 +429,6 @@ include '../templates/header.php'; // 5. HIỂN THỊ GIAO DIỆN
                                     <?php echo htmlspecialchars($booking['device_type']); ?>
                                     (<?php echo htmlspecialchars($booking['device_brand']); ?>)
                                 </td>
-                                <td><?php echo ($booking['service_method'] == 'on-site') ? 'Tại nhà' : 'Mang đến'; ?></td>
                                 <td><?php echo date('d/m/Y H:i', strtotime($booking['booking_date'])); ?></td>
                                 <td class="notes"><?php echo !empty($booking['notes']) ? nl2br(htmlspecialchars($booking['notes'])) : '<i>-</i>'; ?></td>
                                 
@@ -389,6 +446,19 @@ include '../templates/header.php'; // 5. HIỂN THỊ GIAO DIỆN
                                         </select>
                                         <button type="submit" class="btn-update">Lưu</button>
                                     </form>
+                                </td>
+                                
+                                <td>
+                                    <?php if ($booking['status'] == 'completed'): ?>
+                                        <a href="<?php echo BASE_URL; ?>admin/index.php?action=delete_booking&id=<?php echo $booking['id']; ?>&tab=<?php echo $current_tab; ?>" 
+                                           class="btn-action btn-delete" 
+                                           title="Xóa đơn hàng đã hoàn thành"
+                                           onclick="return confirm('Bạn có chắc muốn XÓA VĨNH VIỄN đơn hàng đã hoàn thành này?');">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    <?php else: ?>
+                                        <span>-</span>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -441,4 +511,4 @@ include '../templates/header.php'; // 5. HIỂN THỊ GIAO DIỆN
     </div>
 </div>
 
-<?php include '../templates/footer.php'; ?>
+<?php include '../templates/footer.php'; ?>     

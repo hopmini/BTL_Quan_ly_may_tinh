@@ -127,6 +127,12 @@ include '../templates/header.php'; // 5. HIỂN THỊ GIAO DIỆN
         <a href="<?php echo BASE_URL; ?>admin/users.php">
             <i class="fas fa-users-cog"></i> Quản lý User
         </a>
+        <a href="<?php echo BASE_URL; ?>admin/contacts.php">
+            <i class="fas fa-envelope"></i> Quản lý Tin nhắn
+        </a>
+        <a href="<?php echo BASE_URL; ?>admin/posts.php">
+            <i class="fas fa-newspaper"></i> Quản lý Blog
+        </a>
     </div>
 </div>
 <style>
